@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
-
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,13 +44,18 @@ public class Biblioteca {
 		Catalogo.ricercaPerIsbn(l1.getISBN(), primoCatalogo);
 
 		System.out.println("\nPRIMA RIMOZIONE\n" + primoCatalogo);
-		//ci sono due metodi per rimuovere uno statico che ritorna un nuovo Catalogo e uno di istanza
+		// ci sono due metodi per rimuovere uno statico che ritorna un nuovo Catalogo e
+		// uno di istanza
+
 		primoCatalogo = Catalogo.rimuoviElemento(l1.getISBN(), primoCatalogo);
 		primoCatalogo.rimuoviElemento(l2.getISBN());
+
 		System.out.println("DOPO RIMOZIONE\n" + primoCatalogo);
 
 		System.out.println("\nRICERCA PER ANNO:");
+
 		Catalogo.ricercaPerAnno(2000, primoCatalogo);
+
 		System.out.println("\nRICERCA PER AUTORE:");
 
 		Catalogo.ricercaPerAutore("Autore2", primoCatalogo);
@@ -62,7 +65,7 @@ public class Biblioteca {
 		try {
 			FileUtils.writeStringToFile(catagolotesto, primoCatalogo.salvaCatalogo(), "UTF-8");
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
 		;
@@ -76,7 +79,7 @@ public class Biblioteca {
 			System.out.println("Controllo: \n" + prov);
 
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
 
@@ -105,7 +108,10 @@ public class Biblioteca {
 					temp.add(n);
 
 				} else if (singoli.length == 5) {
-					Periodicita p;
+					Periodicita p; 
+					
+//					= (singoli[4].equals("MENSILE")) ? Periodicita.MENSILE : ((singoli[4].equals("SEMESTRALE")) ? Periodicita.SEMESTRALE : Periodicita.SETTIMANALE);
+
 					if (singoli[4].equals("MENSILE")) {
 						p = Periodicita.MENSILE;
 

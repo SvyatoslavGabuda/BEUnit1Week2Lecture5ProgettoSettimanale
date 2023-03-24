@@ -18,7 +18,10 @@ public class Catalogo {
 	public String salvaCatalogo() {
 		String testo ="";
 		for(int i = 0;i<this.cat.size();i++) {
+			
+			
 			if(cat.get(i) instanceof Libro ) {
+				
 				testo+= cat.get(i).getTitolo()+"@"+ 
 						cat.get(i).getISBN() +"@"+
 						cat.get(i).getAnnoPublicazione()+"@"+
@@ -28,6 +31,7 @@ public class Catalogo {
 						;
 			}
 			if(cat.get(i) instanceof Rivista) {
+				
 				testo+= cat.get(i).getTitolo()+"@"+ 
 						cat.get(i).getISBN() +"@"+
 						cat.get(i).getAnnoPublicazione()+"@"+
@@ -53,33 +57,46 @@ public class Catalogo {
 		return sg;
 	}
 	public static ArrayList<Leggibile> ricercaPerAnno(int anno, Catalogo g) {
+		//in questo metodo come in altri simili potevo farre il return diretto(quello commentato poco sotto)
+		//però ho lascito diviso per lanciare un messaggio di debug.
 
 		ArrayList<Leggibile> sg = (ArrayList<Leggibile>) g.getCat().stream().filter(el -> el.getAnnoPublicazione() == anno).collect(Collectors.toList());
 		Biblioteca.l.debug("Trovato: " + sg);
 		return sg;
+		
+		// return (ArrayList<Leggibile>) g.getCat().stream().filter(el -> el.getAnnoPublicazione() == anno).collect(Collectors.toList());
 	}
 	public static ArrayList<Leggibile> ricercaPerAutore(String Autore, Catalogo g) {
 		
 		ArrayList<Leggibile> sg = (ArrayList<Leggibile>) g.getCat().stream()
-				.filter(el -> {
-					if(el instanceof Libro ) {
-						 return((Libro) el).getAutore().toLowerCase().equals(Autore.toLowerCase());
-						} else {return false;}
-					})
+				.filter(el -> 
+				(el instanceof Libro ) ? 
+						((Libro) el).getAutore().toLowerCase().equals(Autore.toLowerCase()) : false
+
+// Usato il ternario al posto del codice sottostante che ho lasciato per riferimento :						
+						//				{
+//					if(el instanceof Libro ) {
+//						 return((Libro) el).getAutore().toLowerCase().equals(Autore.toLowerCase());
+//						} else {return false;}
+//					}
+				)
 				.collect(Collectors.toList());
 		Biblioteca.l.debug("Trovato: " + sg);
 		return sg;
 	}
 
 	public static Catalogo rimuoviElemento(int isbn, Catalogo g) {
-
-		ArrayList<Leggibile> sg = (ArrayList<Leggibile>) g.getCat().stream().filter(el -> !(el.getISBN() == isbn))
-				.collect(Collectors.toList());
-		Catalogo nuovo = new Catalogo(sg);
-
-		return nuovo;
+//         refactor per riga unica dirattamente nel return
+		return new Catalogo((ArrayList<Leggibile>) g.getCat().stream().filter(el -> !(el.getISBN() == isbn)).collect(Collectors.toList()));
+		
+//		ArrayList<Leggibile> sg = (ArrayList<Leggibile>) g.getCat().stream().filter(el -> !(el.getISBN() == isbn))
+//				.collect(Collectors.toList());
+//		Catalogo nuovo = new Catalogo(sg);
+//
+//		return nuovo;
+		
 	}
-	
+
 	public void rimuoviElemento(int isbn) {
 		
 		this.cat = (ArrayList<Leggibile>) this.cat.stream().filter(el -> !(el.getISBN() == isbn))
