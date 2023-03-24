@@ -79,4 +79,12 @@ public class Catalogo {
 
 		return nuovo;
 	}
+	
+	public void rimuoviElemento(int isbn) {
+		
+		this.cat = (ArrayList<Leggibile>) this.cat.stream().filter(el -> !(el.getISBN() == isbn))
+				.collect(Collectors.toList());
+
+		
+	}
 }

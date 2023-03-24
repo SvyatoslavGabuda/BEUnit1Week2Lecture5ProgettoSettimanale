@@ -16,7 +16,7 @@ public class Biblioteca {
 	public static Logger l = LoggerFactory.getLogger(Biblioteca.class);
 
 	public static void main(String[] args) {
-		
+
 		Leggibile l1 = new Libro("Titolo1", 1900, 100, "Autore1", "Genere1");
 		Leggibile l2 = new Libro("Titolo2", 1901, 200, "Autore2", "Genere2");
 		Leggibile l3 = new Libro("Titolo3", 1902, 120, "Autore2", "Genere3");
@@ -42,11 +42,13 @@ public class Biblioteca {
 //		System.out.println(l1.getISBN());
 //		System.out.println(l5.getISBN());
 //		System.out.println(l6.getISBN());
-System.out.println("\nRICERCA PER ISBN:");
+		System.out.println("\nRICERCA PER ISBN:");
 		Catalogo.ricercaPerIsbn(l1.getISBN(), primoCatalogo);
-		
+
 		System.out.println("\nPRIMA RIMOZIONE\n" + primoCatalogo);
+		//ci sono due metodi per rimuovere uno statico che ritorna un nuovo Catalogo e uno di istanza
 		primoCatalogo = Catalogo.rimuoviElemento(l1.getISBN(), primoCatalogo);
+		primoCatalogo.rimuoviElemento(l2.getISBN());
 		System.out.println("DOPO RIMOZIONE\n" + primoCatalogo);
 
 		System.out.println("\nRICERCA PER ANNO:");
@@ -60,21 +62,21 @@ System.out.println("\nRICERCA PER ISBN:");
 		try {
 			FileUtils.writeStringToFile(catagolotesto, primoCatalogo.salvaCatalogo(), "UTF-8");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		;
 
 		try {
 			String s = FileUtils.readFileToString(catagolotesto, "UTF-8");
-			
-			System.out.println("\nFILE LETTO:\n"+s);
+
+			System.out.println("\nFILE LETTO:\n" + s);
 
 			Catalogo prov = leggiDaFile(catagolotesto);
-			System.out.println("Controllo: \n"+prov);
+			System.out.println("Controllo: \n" + prov);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
