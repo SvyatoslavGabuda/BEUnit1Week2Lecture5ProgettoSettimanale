@@ -16,6 +16,7 @@ public class Biblioteca {
 	public static Logger l = LoggerFactory.getLogger(Biblioteca.class);
 
 	public static void main(String[] args) {
+		
 		Leggibile l1 = new Libro("Titolo1", 1900, 100, "Autore1", "Genere1");
 		Leggibile l2 = new Libro("Titolo2", 1901, 200, "Autore2", "Genere2");
 		Leggibile l3 = new Libro("Titolo3", 1902, 120, "Autore2", "Genere3");
@@ -38,16 +39,19 @@ public class Biblioteca {
 		Leggibile l6 = new Libro("Nuovo", 2000, 1111, "Autore6", "Genere6");
 
 		primoCatalogo.addToCatalogo(l6);
-		System.out.println(l1.getISBN());
-		System.out.println(l5.getISBN());
-		System.out.println(l6.getISBN());
-
+//		System.out.println(l1.getISBN());
+//		System.out.println(l5.getISBN());
+//		System.out.println(l6.getISBN());
+System.out.println("\nRICERCA PER ISBN:");
 		Catalogo.ricercaPerIsbn(l1.getISBN(), primoCatalogo);
-		System.out.println("prima " + primoCatalogo);
-		Catalogo prova = Catalogo.rimuoviElemento(l1.getISBN(), primoCatalogo);
-		System.out.println("dopo " + prova);
+		
+		System.out.println("\nPRIMA RIMOZIONE\n" + primoCatalogo);
+		primoCatalogo = Catalogo.rimuoviElemento(l1.getISBN(), primoCatalogo);
+		System.out.println("DOPO RIMOZIONE\n" + primoCatalogo);
 
+		System.out.println("\nRICERCA PER ANNO:");
 		Catalogo.ricercaPerAnno(2000, primoCatalogo);
+		System.out.println("\nRICERCA PER AUTORE:");
 
 		Catalogo.ricercaPerAutore("Autore2", primoCatalogo);
 
@@ -63,10 +67,11 @@ public class Biblioteca {
 
 		try {
 			String s = FileUtils.readFileToString(catagolotesto, "UTF-8");
-			System.out.println(s);
+			
+			System.out.println("\nFILE LETTO:\n"+s);
 
 			Catalogo prov = leggiDaFile(catagolotesto);
-			System.out.println(prov);
+			System.out.println("Controllo: \n"+prov);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -95,6 +100,7 @@ public class Biblioteca {
 				if (singoli.length == 6) {
 					Libro n = new Libro(singoli[0], Integer.parseInt(singoli[1]), Integer.parseInt(singoli[2]),
 							Integer.parseInt(singoli[3]), singoli[4], singoli[5]);
+					temp.add(n);
 
 				} else if (singoli.length == 5) {
 					Periodicita p;
